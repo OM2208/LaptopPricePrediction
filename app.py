@@ -33,7 +33,7 @@ screen_size = st.number_input('Screen Size')
 resolution = st.selectbox('Screen Resolution',['1920x1080','1366x768','1600x900','3840x2160','3200x1800','2880x1800','2560x1600','2560x1440','2304x1440'])
 
 #cpu
-cpu = st.selectbox('CPU',df['Cpu brand'].unique())
+cpu = st.selectbox('CPU',df['Cpu_brand'].unique())
 
 hdd = st.selectbox('HDD(in GB)',[0,128,256,512,1024,2048])
 
@@ -60,7 +60,7 @@ if st.button('Predict Price'):
     Y_res = int(resolution.split('x')[1])
     ppi = ((X_res**2) + (Y_res**2))**0.5/screen_size
     query = np.array([company,type,ram,weight,touchscreen,ips,ppi,cpu,hdd,ssd,gpu,os])
-
+    query = np.array(query,dtype=object)
     query = query.reshape(1,12)
-    st.title("The predicted price of this configuration is " + str(int(np.exp(pipe.predict(query)[0]))))
+    st.title("The predicted price of this configuration is : " + str(int(np.exp(pipe.predict(query)[0]))))
 
